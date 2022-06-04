@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# 6.3
+
+问题：axios 请求发送失败
+
+原因：请求体变量名称不对、没有添加 head
+# 6.4
+
+浏览器缓存添加方式：localStorage.setItem，添加成功的缓存到 “检查”=> application 查看
+
+react 里的 js 语句要用 {} 括起来

@@ -1,12 +1,31 @@
 import React, { Component } from "react";
-import { Card, Form, Input, Button, Checkbox } from "antd";
+import { Card, Form, Input, Button, Checkbox, message } from "antd";
 import "./index.css";
 import logo from "assets/logo192.png";
+import login from "../../api/user";
 
 class Login extends Component {
+  state = {
+    loading: false
+  };
   render() {
-    const onFinish = values => {
-      console.log("Success:", values);
+    const onFinish = async ({ telephonee, password }) => {
+      this.setState({
+        // 按钮加载状态
+        loading: true
+      });
+      try {
+        const res = await login({ telephonee, password });
+        message.success("登陆成功", 1, () => {
+          console.log(res);
+          localStorage.setItem("token", res.data.token);
+          this.props.history.push("/home");
+        });
+      } catch (error) {
+        this.setState({ loading: false });
+        console.log(error);
+        alert(error.response.data.message);
+      }
     };
     return (
       <div className="login">
@@ -15,9 +34,9 @@ class Login extends Component {
           <Form
             name="basic"
             initialValues={{
-              telephonee:"13911111111",
-              password:"246810",
-              remember:true
+              telephonee: "13911111111",
+              password: "246810",
+              remember: true
             }}
             autoComplete="off"
             size="large"
@@ -66,11 +85,11 @@ class Login extends Component {
               rules={[
                 {
                   validator: async (rule, value) => {
-                    if(value){
+                    if (value) {
                       return Promise.resolve;
-                    }else{
+                    } else {
                       // return Promise.reject()
-                      throw new Error('请同意我的霸王条款!');
+                      throw new Error("请同意我的霸王条款!");
                     }
                   }
                 }
@@ -80,7 +99,11 @@ class Login extends Component {
             </Form.Item>
 
             <Form.Item wrapperCol={{ span: 16, offset: 8 }}>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={this.state.loading}
+              >
                 登录
               </Button>
             </Form.Item>
