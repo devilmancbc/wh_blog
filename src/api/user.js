@@ -1,4 +1,5 @@
 import request from 'utils/request'
+
 /**
  * 
  * @param {String} telephonee 
@@ -14,4 +15,16 @@ const login = async ({ telephonee, password }) => {
       }
     });
   };
+
+  /**
+   * 获取用户信息
+   */
+export const getUserProfile = () => {
+    return request({
+      method: "get",
+      url: "/user/profile",
+      
+    });
+  };
+  
   export default login;

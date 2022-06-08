@@ -1,0 +1,32 @@
+.aa {
+  background-color: pink;
+  width: 100vw;
+  height: 100vh;
+  :global {
+    .logo {
+      float: left;
+      width: 125px;
+      height: 31px;
+      margin: 16px 24px 16px 0;
+      background: rgba(255, 255, 255, 0.3);
+      background-image: url("~assets/logo192.png");
+      background-size: contain;
+    }
+    .profile {
+      color: #fff;
+      position: absolute;
+      right: 20px;
+      span {
+        margin-left: 20px;
+        cursor: pointer;
+      }
+    }
+    .ant-row-rtl #components-layout-demo-top-side-2 .logo {
+      float: right;
+      margin: 16px 0 16px 24px;
+    }
+    .site-layout-background {
+      background: #fff;
+    }
+  }
+}

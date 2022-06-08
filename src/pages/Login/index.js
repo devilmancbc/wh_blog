@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { Card, Form, Input, Button, Checkbox, message } from "antd";
-import "./index.css";
+import styles from "./index.module.scss";
 import logo from "assets/logo192.png";
 import login from "../../api/user";
+import { setToken } from "utils/storage";
 
 class Login extends Component {
   state = {
-    loading: false
+    loading: false,
+    data: {}
   };
   render() {
     const onFinish = async ({ telephonee, password }) => {
@@ -16,19 +18,22 @@ class Login extends Component {
       });
       try {
         const res = await login({ telephonee, password });
+        const { state } = this.props.location;
+        setToken(res.data.token);
         message.success("登陆成功", 1, () => {
-          console.log(res);
-          localStorage.setItem("token", res.data.token);
-          this.props.history.push("/home");
+          if (state) {
+            this.props.history.push(state.from);
+          } else {
+            this.props.history.push("/home");
+          }
         });
       } catch (error) {
         this.setState({ loading: false });
-        console.log(error);
         alert(error.response.data.message);
       }
     };
     return (
-      <div className="login">
+      <div className={styles.login}>
         <Card className="login-container" style={{ width: 440, height: 360 }}>
           <img src={logo} className="logo" alt="" />
           <Form
